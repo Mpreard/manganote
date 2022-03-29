@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+
+{% block content %}
+  <h1>ANIMES</h1>
+
+  <table>
+    <tr>
+        <td>#</td>
+        <td>Name</td>
+        <td>Synopsis</td>
+        <td>Nb ep </td>
+        <td>Average Note</td>
+    </tr>
+    {% for anime in animes %}
+      <tr>
+        <td>{{ anime.id }}</td>
+        {% if anime.attributes.titles.en is not null %}
+          <td>{{ anime.attributes.titles.en|capfirst }}</td>
+        {% else %}
+          <td>{{ anime.attributes.titles.en_jp|capfirst }}</td>
+        {% endif %}
+        <td>{{ anime.attributes.synopsis }}</td>
+        <td>{{ anime.attributes.episodeCount }}</td>
+        <td>{{ anime.attributes.averageRating }} / 10</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

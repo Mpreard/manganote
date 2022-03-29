@@ -1,0 +1,43 @@
+{% block title %}
+  <h1>MANGAS</h1>
+{% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+        <td>#</td>
+        <td>Name</td>
+        <td>Synopsis</td>
+        <td>Nb chap </td>
+        <td>Nb volume </td>
+        <td>Average Note</td>
+    </tr>
+    <tr>
+        <a href="/mangas">
+            <td>{{ manga.id }}
+                <form action="addBookmark" method="post">
+                    {% csrf_token %}
+                    <input name="chapter">chapter :</input>
+                    <button type="submit"> add bookmark </button>
+                </form>
+                <form action="deleteBookmark" method="post">
+                    {% csrf_token %}
+                    <button type="submit"> delete bookmark </button>
+                </form>
+                <form action="getBookmark" method="get">
+                    <button type="submit"> get bookmark </button>
+                </form>
+            </td>
+            {% if manga.attributes.titles.en is not null %}
+                <td>{{ manga.attributes.titles.en|capfirst }}</td>
+            {% else %}
+                <td>{{ manga.attributes.titles.en_jp|capfirst }}</td>
+            {% endif %}
+            <td>{{ manga.attributes.synopsis }}</td>
+            <td>{{ manga.attributes.chapterCount }}</td>
+            <td>{{ manga.attributes.volumeCount }}</td>
+            <td>{{ manga.attributes.averageRating }} / 10</td>
+        </a>
+    </tr>
+  </table>
+{% endblock %}

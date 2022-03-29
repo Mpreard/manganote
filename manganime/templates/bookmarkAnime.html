@@ -1,0 +1,29 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<h1>BOOKMARK</h1>
+
+<table>
+    <tr>
+        <td>Id</td>
+        <td>episode</td>
+        <td>saison</td>
+        <td>Nom anime</td>
+        <td>image</td>
+    </tr>
+    {% for animeData in arrayData %}
+    <tr>
+        <td>{{ animeData.1.anime.id }}</td>
+        <td>{{ animeData.1.anime.episode }}</td>
+        <td>{{ animeData.1.anime.season }}</td>
+        {% if animeData.attributes.titles.en is not null %}
+        <td>{{ animeData.0.attributes.titles.en|capfirst }}</td>
+        {% else %}
+        <td>{{ animeData.0.attributes.titles.en_jp|capfirst }}</td>
+        {% endif %}
+        <td><img src="{{ animeData.0.attributes.posterImage.tiny }}" alt="image"></td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

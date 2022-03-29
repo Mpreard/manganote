@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <a href="/friendship"><button>Friends list</button></a>
+    <ul>
+        {% for invite in invites %}
+            <li> Vous avez une invitation de : </li>
+            <li> {{ invite.user_applicant.username }} </li>
+            <li> Le : </li>
+            <li> {{ invite.create_time|date:"F d, Y" }} </li>
+
+            <a href="/friendship/invites/{{ invite.id }}/delete"><button> Supprimer </button></a>
+            <a href="/friendship/invites/{{ invite.id }}/accept"><button> Accepter </button><a>
+        {% empty %}
+            <h1> No invitation found </h1>
+        {% endfor %}
+    </ul>
+{% endblock content %}
+ 

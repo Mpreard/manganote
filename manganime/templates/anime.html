@@ -1,0 +1,40 @@
+{% extends '_base.html' %}
+
+{% block content %}
+  <h1>ANIMES</h1>
+
+  <table>
+    <tr>
+        <td>#</td>
+        <td>Name</td>
+        <td>Synopsis</td>
+        <td>Nb ep </td>
+        <td>Average Note</td>
+    </tr>
+    <tr>
+        <td>{{ anime.id }}
+            <form action="addBookmark" method="post">
+                {% csrf_token %}
+                episode : <input name="episode"/>
+                season : <input name="season"/>
+                <button type="submit"> add bookmark </button>
+            </form>
+            <form action="deleteBookmark" method="post">
+                {% csrf_token %}
+                <button type="submit"> delete bookmark </button>
+            </form>
+            <form action="getBookmark" method="get">
+                <button type="submit"> get bookmark </button>
+            </form>
+        </td>
+        {% if anime.attributes.titles.en is not null %}
+            <td>{{ anime.attributes.titles.en|capfirst }}</td>
+        {% else %}
+            <td>{{ anime.attributes.titles.en_jp|capfirst }}</td>
+        {% endif %}
+        <td>{{ anime.attributes.synopsis }}</td>
+        <td>{{ anime.attributes.episodeCount }}</td>
+        <td>{{ anime.attributes.averageRating }} / 10</td>
+    </tr>
+  </table>
+{% endblock %}

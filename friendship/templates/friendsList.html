@@ -1,0 +1,55 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <ul>
+        {% for friend in friends %}
+            {% if friend.user_applicant.id != myUser.id %}
+                <li> {{ friend.user_applicant.username }} </li>
+            {% else %}
+                <li> {{ friend.user_receiving.username }} </li>
+            {% endif %}
+            <li> {{ friend.create_time|date:"F d, Y" }} </li>
+
+            <a href="/friendship/invites/{{ friend.id }}/delete"><button>Supprimer</button></a>
+            {% if friend.user_applicant.id != myUser.id %}
+                <a href="/friendship/watch/{{ friend.user_applicant.id }}"><button>Voir le profil</button></a>
+            {% else %}
+                <a href="/friendship/watch/{{ friend.user_receiving.id }}"><button>Voir le profil</button></a>
+            {% endif %}
+        {% empty %}
+            <h1> No friend found </h1>
+        {% endfor %}
+    </ul>
+    <div class="card-body">
+        <form method="POST" action="invites/invite">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="form-group">
+                        <label class="small mb-1" for="username">Username</label>
+                        <input
+                            type="username"
+                            name="username"
+                            maxlength="254"
+                            required
+                            id="username"
+                            placeholder="Enter username"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="form-group mt-0 mb-1">
+                        <button type="submit" class="col-md-12 btn btn-dark">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% block button %}
+        <a href="/friendship/invites"><button>Invitations</button></a>
+    {% endblock button %}
+{% endblock content %}
